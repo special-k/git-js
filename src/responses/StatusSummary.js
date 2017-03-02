@@ -1,6 +1,4 @@
 
-var FileStatusSummary = require('./FileStatusSummary');
-
 module.exports = StatusSummary;
 
 /**
@@ -16,6 +14,7 @@ function StatusSummary () {
    this.modified = [];
    this.renamed = [];
    this.files = [];
+   this.staged = [];
 }
 
 /**
@@ -88,17 +87,33 @@ StatusSummary.parsers = {
 
    A: function (line, status) {
       status.created.push(line);
+      status.staged.push(line);
    },
 
    AM: function (line, status) {
       status.created.push(line);
+      status.staged.push(line);
    },
 
    D: function (line, status) {
       status.deleted.push(line);
+      status.staged.push(line);
+   },
+
+   ' D': function (line, status) {
+      status.deleted.push(line);
    },
 
    M: function (line, status) {
+      status.modified.push(line);
+      status.staged.push(line);
+   },
+
+   ' M': function (line, status) {
+      status.modified.push(line);
+   },
+
+   'MM': function (line, status) {
       status.modified.push(line);
    },
 
