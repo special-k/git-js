@@ -1,3 +1,4 @@
+var FileStatusSummary = require('./FileStatusSummary');
 
 module.exports = StatusSummary;
 
@@ -144,7 +145,7 @@ StatusSummary.parse = function (text) {
       }
 
       if (line) {
-         if ((handler = StatusSummary.parsers[line[1].trim()])) {
+         if ((handler = StatusSummary.parsers[line[1].replace(/\s+$/g, '')])) {
             handler(line[2], status);
          }
 
